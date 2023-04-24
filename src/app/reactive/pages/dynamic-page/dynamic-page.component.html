@@ -1,13 +1,16 @@
 <h2>Reactivos: <small> Dinámicos </small></h2>
 <hr>
 
-<form autocomplete="off">
+<!-- Para enlazar el formulario con el ts hay que usar [formGroup] -->
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()" autocomplete="off">
 
     <!-- Nombre -->
     <div class="mb-3 row">
         <label class="col-sm-3 col-form-label">Nombre</label>
         <div class="col-sm-9">
+            <!-- Para enlazar el input con la propiedad del formulario del ts, usamos formControlName -->
             <input class="form-control"
+                   formControlName="name"
                    placeholder="Nombre de la persona">
             <span class="form-text text-danger">
                    error message
@@ -37,12 +40,15 @@
     <!-- Lista de Juegos Favoritos -->
     <div class="mb-3 row">
         <label class="col-sm-3 col-form-label">Favoritos</label>
-        <div class="col-sm-9">
-
-            <div class="mb-1">
+        <!-- Para enlazar el array del formulario del ts, usamos formArrayName -->
+        <div class="col-sm-9" formArrayName="favoriteGames">
+          <!-- Para crear tantos elementos como tenga el array del ts usamos el ngFor-->
+          <div class="mb-1" *ngFor="let favorito of juegosFavoritos.controls; let i = index">
 
                 <div class="input-group">
-                    <input class="form-control">
+                    <!-- Para enlazar con el elemento del array de juegosFavoritos -->
+                    <input class="form-control"
+                           [formControlName]="i">
 
                     <button class="btn btn-outline-danger"
                             type="button">
